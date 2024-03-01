@@ -1,0 +1,35 @@
+<div>
+    <h1>Cadastro de Clientes</h1>
+  
+    <form [formGroup]="clienteForm" (ngSubmit)="adicionarCliente()">
+      <label for="name">Nome do Cliente:</label>
+      <input type="text" id="name" formControlName="name">
+      <div *ngIf="clienteForm.get('name').hasError('minlength')">
+        O nome deve ter pelo menos 10 caracteres.
+      </div>
+  
+      <label for="cpf">CPF:</label>
+      <input type="text" id="cpf" formControlName="cpf">
+  
+      <label for="address">Endereço:</label>
+      <input type="text" id="address" formControlName="address.address">
+  
+      <label for="neighborhood">Bairro:</label>
+      <input type="text" id="neighborhood" formControlName="address.neighborhood">
+  
+      <label for="phones">Telefones:</label>
+      <div *ngFor="let phone of phones.controls; let i = index" class="phone-container">
+        <input type="text" [formControl]="phone">
+        <button type="button" (click)="removerTelefone(i)">Remover</button>
+      </div>
+      <button type="button" (click)="adicionarTelefone()">Adicionar Telefone</button>
+  
+      <button type="submit">Adicionar Cliente</button>
+    </form>
+  
+    <h2>Lista de Clientes</h2>
+    <ul *ngFor="let cliente of clientes">
+      <li>{{ cliente.name }} - {{ cliente.address.address }} - {{ cliente.address.neighborhood }} - {{ cliente.phones[0] }}</li>
+    </ul>
+  </div>
+  
